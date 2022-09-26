@@ -26,6 +26,12 @@ public class PlayerController : MonoBehaviour
     {
         _gold += (int)newGold;
         Debug.LogError("current gold: " + _gold);
+        this.gameObject.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        Observer.Instant.RemoveObserver(Observer.ADD_GOLD, addGold);
     }
 
 }

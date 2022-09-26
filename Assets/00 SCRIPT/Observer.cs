@@ -46,9 +46,16 @@ public class Observer : MonoBehaviour
         listActions.Add(action);
     }
 
-    public void RemoveObserver(string name)
+    public void RemoveObserver(string name, Action<object> action)
     {
-        ListObservers.Remove(name);
+        HashSet<Action<object>> listActions = new HashSet<Action<object>>();
+        if (!ListObservers.TryGetValue(name, out listActions))
+        {
+           return;
+        }
+
+        if (listActions.Contains(action))
+            listActions.Remove(action);
     }
 
     public void Notify(string name, object data = null)
